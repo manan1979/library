@@ -1,113 +1,3 @@
-// package main
-
-// import (
-// 	"database/sql"
-// 	"encoding/json"
-// 	"fmt"
-// 	"log"
-// 	"net/http"
-// 	"os"
-
-// 	_ "github.com/go-sql-driver/mysql"
-// 	"github.com/gorilla/mux"
-// )
-
-// const (
-// 	API_PATH = "/apis/v1/books"
-// )
-
-// type library struct {
-// 	dbHost, dbPass, dbName string
-// }
-
-// type Book struct {
-// 	Id, Name, Isbn string
-// }
-
-// func main() {
-
-// 	dbHost := os.Getenv("DB_HOST")
-
-// 	if dbHost == "" {
-// 		dbHost = "localhost:3306"
-// 	}
-
-// 	dbPass := os.Getenv("DB_PASS")
-// 	if dbPass == "" {
-// 		dbPass = "manan"
-// 	}
-
-// 	apiPath := os.Getenv("API_PATH")
-
-// 	if apiPath == "" {
-// 		apiPath = API_PATH
-// 	}
-
-// 	dbName := os.Getenv("DB_NAME")
-// 	if dbName == "" {
-// 		dbName = "library"
-// 	}
-
-// 	l := library{
-// 		dbHost: dbHost,
-// 		dbPass: dbPass,
-// 		dbName: dbName,
-// 	}
-
-// 	r := mux.NewRouter()
-// 	r.HandleFunc(apiPath, l.getBooks).Methods("GET")
-// 	http.ListenAndServe(":3001", r)
-
-// }
-
-// func (l library) getBooks(w http.ResponseWriter, r *http.Request) {
-// 	//open connection
-// 	db := l.openConnection()
-// 	// read all the books
-// 	rows, err := db.Query("select the books")
-// 	if err != nil {
-// 		log.Fatalf("querying the books table %s\n", err.Error())
-// 	}
-
-// 	books := []Book{}
-// 	for rows.Next() {
-// 		var id, name, isbn string
-// 		err := rows.Scan(&id, &name, &isbn)
-// 		if err != nil {
-// 			log.Fatalf("While scanning the row% s\n", err.Error())
-// 		}
-// 		aBook := Book{
-// 			Id:   id,
-// 			Name: name,
-// 			Isbn: isbn,
-// 		}
-// 		books = append(books, aBook)
-// 	}
-
-// 	json.NewEncoder(w).Encode(books)
-// 	// close the connection
-
-// 	l.closeConnection(db)
-
-// }
-
-// func (l library) openConnection() *sql.DB {
-// 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s", "manan123", l.dbPass, l.dbHost, l.dbName))
-// 	if err != nil {
-// 		log.Fatalf("opening the connection to the database %s\n", err.Error())
-// 	}
-// 	return db
-
-// }
-
-// func (l library) closeConnection(db *sql.DB) {
-// 	err :=
-// 		db.Close()
-// 	if err != nil {
-// 		log.Fatalf("closing the connection %s\n", err.Error())
-// 	}
-// }
-
 package main
 
 import (
@@ -143,7 +33,7 @@ func main() {
 
 	dbPass := os.Getenv("DB_PASS")
 	if dbPass == "" {
-		dbPass = "manan"
+		dbPass = "yourpasswd"
 	}
 
 	apiPath := os.Getenv("API_PATH")
@@ -227,7 +117,7 @@ func (l library) getBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (l library) openConnection() *sql.DB {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s", "manan123", l.dbPass, l.dbHost, l.dbName))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s", "root", l.dbPass, l.dbHost, l.dbName))
 	if err != nil {
 		log.Fatalf("opening the connection to the database %s\n", err.Error())
 	}
